@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # NHS - SMAIRs Funding Analysis
 
 This project dives deep into [SMAIRs](https://data.ontario.ca/dataset/service-manager-annual-information-return-smair) dataset, not yet released to public, but obtained via [Freedom of information](https://www.ontario.ca/page/freedom-information-request).
