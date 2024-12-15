@@ -1,4 +1,9 @@
-# SMAIRs Analysis
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# NHS - SMAIRs Funding Analysis
 
 This project dives deep into [SMAIRs](https://data.ontario.ca/dataset/service-manager-annual-information-return-smair) dataset, not yet released to public, but obtained via [Freedom of information](https://www.ontario.ca/page/freedom-information-request).
 
@@ -7,6 +12,11 @@ Every year under NHS (National Housing Startegy), Service Managers have to file 
 ---
 
 ## Conclusions
+
+- The findings of the project highlight that public housing schemes have been consistently receiving higher funding that the private sector. 
+-  Despite the evolving policies, the RGI rent supplements have shown no significant shift from public housing to private rentals over the years
+
+This underscores the contribution of public housing in social housing and the effective administration of service managers. 
 
 ---
 
@@ -111,7 +121,7 @@ Ottawa has most number of units hence requiring most funding.
 
 
 **CWL**
-Centralized waiting list has households which are on wait for receiving beneits
+Centralized waiting list has households which are on wait for receiving benefits
 
 ![](/EDA/CWL_by_year.png)
 
@@ -123,6 +133,19 @@ Ottawa and York have highest demand.
 
 ## Statistical Testing
 
-All hypothesis testing were done in R. (**housing_model_final.R**)
+This was the final step in the project methodology that involved developing statistical models to evaluate presence of any statistically significant shifts in the fund allocations. Hierarchical Linear Models were developed in R to assess the coefficients of contributing variables and their p-values. (**housing_model_final.R**)
 
+### Ongoing Funding:
 
+```R
+model <- lmerTest::lmer(log(ongoing_funding) ~ year_centered * scheme + (1 | city), data = funds)
+```
+To access the interaction between ‘Year’ and ‘Scheme’ (Public and Private), an interaction term of these was introduced to the model, while city was added as a variable effects term. The logarithm of ongoing funding was taken into account to handle the extreme right skew in the data.
+
+### RGI Funding:
+On similar terms, the RGI Funding model was developed.
+
+```R
+model <- lmerTest::lmer(log(rgi_funding + 1) ~ year_centered * scheme + (1 | city), data = funds)
+```
+The logarithm of RGI funding was taken into account to handle the extreme left skew in the data.
